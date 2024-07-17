@@ -1,7 +1,3 @@
-# Interview
-
-인터뷰
-
 # Updates
 
 - 2024-07-18
