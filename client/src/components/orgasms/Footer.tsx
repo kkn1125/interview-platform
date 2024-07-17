@@ -7,7 +7,6 @@ const FooterComponent = styled(FooterExtendsBox)`
   color: white;
   text-align: center;
   padding: 1rem;
-  margin-top: 2rem;
 `;
 
 function Footer() {

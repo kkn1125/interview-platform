@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 function Header() {
   return (
@@ -10,7 +11,15 @@ function Header() {
         padding: "1rem",
         textAlign: "center",
       }}>
-      <Typography component='h3' variant='h5' fontWeight={700}>
+      <Typography
+        component={Link}
+        to='/'
+        variant='h5'
+        fontWeight={700}
+        sx={{
+          color: "inherit",
+          textDecoration: "none",
+        }}>
         Interview Platform
       </Typography>
     </Box>

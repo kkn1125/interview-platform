@@ -1,18 +1,37 @@
-import { Stack } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 
 function Home() {
   return (
     <Stack flex={1}>
-      <div className='main'>
-        <h2>Share Your Story, Anonymously</h2>
-        <p>
+      <Box
+        component='main'
+        sx={{
+          textAlign: "center",
+          padding: "2rem",
+        }}>
+        <Typography
+          component='h2'
+          fontSize='2.5rem'
+          fontWeight={700}
+          color='#333'
+          gutterBottom>
+          Share Your Story, Anonymously
+        </Typography>
+        <Typography fontSize='1.2rem' gutterBottom color='#777'>
           Connect with others by sharing your experiences and reading theirs.
           Start your anonymous interview now.
-        </p>
-        <a href='#' className='cta-button'>
+        </Typography>
+        <Button
+          size='large'
+          variant='contained'
+          sx={{
+            px: "1.6rem",
+            py: "0.6rem",
+            fontSize: "1.2rem",
+          }}>
           Start Interview
-        </a>
-      </div>
+        </Button>
+      </Box>
       <div className='cards'>
         <div className='card'>
           <h3>Latest Interviews</h3>
