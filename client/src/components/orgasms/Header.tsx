@@ -1,5 +1,7 @@
-import { Box, Typography } from "@mui/material";
+import { AccountCircle } from "@mui/icons-material";
+import { Box, IconButton, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import MenuButton from "../moleculars/MenuButton";
 
 function Header() {
   return (
@@ -11,17 +13,23 @@ function Header() {
         padding: "1rem",
         textAlign: "center",
       }}>
-      <Typography
-        component={Link}
-        to='/'
-        variant='h5'
-        fontWeight={700}
-        sx={{
-          color: "inherit",
-          textDecoration: "none",
-        }}>
-        Interview Platform
-      </Typography>
+      <Stack direction='row' justifyContent='space-between' alignItems='center'>
+        <MenuButton />
+        <Typography
+          component={Link}
+          to='/'
+          variant='h5'
+          fontWeight={700}
+          sx={{
+            color: "inherit",
+            textDecoration: "none",
+          }}>
+          Interview Platform
+        </Typography>
+        <IconButton color='inherit'>
+          <AccountCircle />
+        </IconButton>
+      </Stack>
     </Box>
   );
 }

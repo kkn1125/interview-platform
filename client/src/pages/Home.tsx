@@ -1,38 +1,50 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
+import SummaryCard from "../components/atoms/SummaryCard";
+import useCustomNavigate from "../hooks/useCustomNavigate";
+import ForwardButton from "@components/atoms/ForwardButton";
 
 function Home() {
+  const { forward } = useCustomNavigate();
   return (
     <Stack flex={1}>
-      <Box
-        component='main'
-        sx={{
-          textAlign: "center",
-          padding: "2rem",
-        }}>
+      <Box component='main' textAlign='center' p={4}>
         <Typography
           component='h2'
           fontSize='2.5rem'
           fontWeight={700}
           color='#333'
-          gutterBottom>
-          Share Your Story, Anonymously
+          align='center'
+          gutterBottom
+          sx={{
+            px: 10,
+          }}>
+          모두에게 질문하고 이야기를 공유하세요
         </Typography>
         <Typography fontSize='1.2rem' gutterBottom color='#777'>
-          Connect with others by sharing your experiences and reading theirs.
-          Start your anonymous interview now.
+          나의 지금은 누군가에게 과거가 되고, 과거의 질문이 모여 현재의 나와
+          소통하고 기록합니다. 자신만의 완성된 인터뷰를 자기소개에 활용해보세요.
         </Typography>
-        <Button
-          size='large'
-          variant='contained'
-          sx={{
-            px: "1.6rem",
-            py: "0.6rem",
-            fontSize: "1.2rem",
-          }}>
-          Start Interview
-        </Button>
+        <ForwardButton to='/interview/choise'>인터뷰 시작하기</ForwardButton>
       </Box>
-      <div className='cards'>
+      <Stack direction='row' justifyContent='center' gap={2} mt={1}>
+        <SummaryCard
+          title='익명 인터뷰'
+          contents={["사람들의 최신 익명 인터뷰를 읽어보세요."]}
+        />
+        <SummaryCard
+          title='인기 있는 주제'
+          contents={[
+            "인기 있는 토픽을 탐색하고 사람들이 어떤 이야기를 하고 있는지 확인하세요.",
+          ]}
+        />
+        <SummaryCard
+          title='경험 공유'
+          contents={[
+            "커뮤니티에 가입하고 익명으로 나만의 이야기를 공유해 보세요.",
+          ]}
+        />
+      </Stack>
+      {/* <div className='cards'>
         <div className='card'>
           <h3>Latest Interviews</h3>
           <p>
@@ -48,7 +60,7 @@ function Home() {
           <h3>Share Your Experience</h3>
           <p>Join the community and share your own story anonymously.</p>
         </div>
-      </div>
+      </div> */}
     </Stack>
   );
 }
