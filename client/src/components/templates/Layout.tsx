@@ -5,9 +5,9 @@ import Footer from "../orgasms/Footer";
 
 function Layout() {
   return (
-    <Stack sx={{ height: "inherit" }}>
+    <Stack height='inherit'>
       <Header />
-      <Stack flex={1} sx={{ overflow: "auto" }}>
+      <Stack flex={1} overflow='auto'>
         <Outlet />
       </Stack>
       <Footer />

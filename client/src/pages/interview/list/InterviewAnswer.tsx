@@ -1,15 +1,5 @@
 import ForwardButton from "@components/atoms/ForwardButton";
-import {
-  Stack,
-  Paper,
-  Typography,
-  TextField,
-  Select,
-  MenuItem,
-  Divider,
-  Toolbar,
-} from "@mui/material";
-import React from "react";
+import { Paper, Stack, TextField, Toolbar, Typography } from "@mui/material";
 
 function InterviewAnswer() {
   return (
@@ -36,7 +26,9 @@ function InterviewAnswer() {
           rows={3}
           placeholder='여기에 답변을 작성하세요.'
         />
-        <ForwardButton sx={{ mt: 4 }}>답변 저장</ForwardButton>
+        <ForwardButton to='/interview/list' sx={{ mt: 4 }}>
+          답변 저장
+        </ForwardButton>
       </Paper>
       <Toolbar />
     </Stack>

@@ -6,8 +6,7 @@ const questions: QuestionCardProps[] = [
   {
     id: 1,
     title: "Introduce yourself",
-    contents: "Provide a brief introduction about yourself.",
-    categories: ["personal", "popular"],
+    categories: ["personal"],
     answered: 5,
     createdAt: new Date(),
   },
@@ -15,7 +14,6 @@ const questions: QuestionCardProps[] = [
     id: 2,
     questions: 3,
     title: "Career Journey",
-    contents: "Share your experiences and milestones in your career.",
     categories: ["personal", "popular"],
     answered: 5,
     createdAt: new Date(2024, 6, 20, 12, 38),
@@ -28,13 +26,7 @@ function InterviewList() {
     return false;
   }
   return (
-    <Stack
-      flex={1}
-      sx={{
-        width: "90%",
-        mt: 8,
-        mx: "auto",
-      }}>
+    <Stack flex={1}>
       <Stack sx={{ mb: 4 }}>
         <Stack direction='row' component='form' onSubmit={handleSubmit}>
           <TextField
@@ -71,7 +63,6 @@ function InterviewList() {
             id={question.id}
             questions={question.questions}
             title={question.title}
-            contents={question.contents}
             categories={question.categories}
             answered={question.answered}
             createdAt={question.createdAt}

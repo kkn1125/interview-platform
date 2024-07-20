@@ -1,14 +1,14 @@
 import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavigateOptions, useNavigate } from "react-router-dom";
 import { pathJoin } from "../utils/pathJoin";
 
 function useCustomNavigate() {
   const navigate = useNavigate();
   const forward = useCallback(
-    (to: string | string[]) => {
+    (to: string | string[], options?: NavigateOptions) => {
       const prefix = import.meta.env.BASE_URL;
       const url = pathJoin(prefix, ...(to instanceof Array ? [...to] : [to]));
-      navigate(url);
+      navigate(url, options);
     },
     [navigate]
   );

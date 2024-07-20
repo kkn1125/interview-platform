@@ -14,7 +14,7 @@ import {
 
 function InterviewRegister() {
   return (
-    <Stack flex={1} sx={{ maxWidth: 600, mx: "auto", width: "100%" }}>
+    <Stack flex={1}>
       <Paper sx={{ p: 4, my: 4 }}>
         {/* each question */}
         <Typography
@@ -78,7 +78,6 @@ function InterviewRegister() {
       <ForwardButton to='/interview/list' sx={{ mt: 4 }}>
         질문 목록 보기
       </ForwardButton>
-      <Toolbar />
     </Stack>
   );
 }
