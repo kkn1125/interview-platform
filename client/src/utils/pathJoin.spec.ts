@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { pathJoin } from "./path-join";
+import { pathJoin } from "./pathJoin";
 import { MODE } from "@common/mode";
 
 console.log("mode", MODE);

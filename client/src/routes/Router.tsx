@@ -4,6 +4,7 @@ import Layout from "../components/templates/Layout";
 import InterviewChoise from "../pages/interview/choise/InterviewChoise";
 import InterviewList from "../pages/interview/list/InterviewList";
 import InterviewRegister from "@pages/interview/service/InterviewRegister";
+import InterviewAnswer from "@pages/interview/service/InterviewAnswer";
 
 function Router() {
   return (
@@ -14,6 +15,7 @@ function Router() {
           <Route path='list' element={<InterviewList />} />
           <Route path='register' element={<InterviewRegister />} />
           <Route path='choise' element={<InterviewChoise />} />
+          <Route path='answer/:id' element={<InterviewAnswer />} />
         </Route>
       </Route>
     </Routes>

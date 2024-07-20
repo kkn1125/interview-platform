@@ -1,11 +1,15 @@
-import { Menu as MenuIcon } from "@mui/icons-material";
 import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
-import { MouseEvent, useState } from "react";
+import { MouseEvent, ReactNode, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 type HTMLOrNull = HTMLElement | null;
-
-function MenuButton() {
+type MenuType = { name: string; to: string };
+type MenuButtonProps = {
+  dir: "left" | "right";
+  icon: ReactNode;
+  menuList: MenuType[];
+};
+function MenuButton({ menuList, dir, icon }: MenuButtonProps) {
   const navigate = useNavigate();
   const [anchor, setAnchor] = useState<HTMLOrNull>(null);
 
@@ -20,34 +24,30 @@ function MenuButton() {
   return (
     <>
       <IconButton color='inherit' onClick={handleOpenMenu}>
-        <MenuIcon />
+        {icon}
       </IconButton>
       <Menu
         anchorEl={anchor}
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "left",
+          horizontal: dir,
         }}
         transformOrigin={{
           vertical: "top",
-          horizontal: "left",
+          horizontal: dir,
         }}
         open={Boolean(anchor)}
         onClose={handleCloseMenu}>
-        <MenuItem
-          onClick={() => {
-            handleCloseMenu();
-            navigate("/");
-          }}>
-          <Typography>메인</Typography>
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            handleCloseMenu();
-            navigate("/interview/list");
-          }}>
-          <Typography>인터뷰 리스트</Typography>
-        </MenuItem>
+        {menuList.map((menu) => (
+          <MenuItem
+            key={menu.name + menu.to}
+            onClick={() => {
+              handleCloseMenu();
+              navigate(menu.to);
+            }}>
+            <Typography>{menu.name}</Typography>
+          </MenuItem>
+        ))}
       </Menu>
     </>
   );

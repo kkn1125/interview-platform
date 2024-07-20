@@ -1,13 +1,16 @@
 import useCustomNavigate from "@hooks/useCustomNavigate";
 import { Button, ButtonOwnProps } from "@mui/material";
 
-type ToType = { to: string };
+type ToType = { to?: string };
 type ForwardButtonProps = {} & ButtonOwnProps;
 
 function ForwardButton({ to, sx, ...props }: ToType & ForwardButtonProps) {
   const { forward } = useCustomNavigate();
+
   function handleForward() {
-    forward(to);
+    if (to) {
+      forward(to);
+    }
   }
 
   return (
@@ -20,7 +23,7 @@ function ForwardButton({ to, sx, ...props }: ToType & ForwardButtonProps) {
         fontSize: "1.2rem",
         ...sx,
       }}
-      onClick={handleForward}
+      {...(to && { onClick: handleForward })}
       {...props}
     />
   );

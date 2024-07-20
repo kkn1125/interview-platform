@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { pathJoin } from "../utils/path-join";
+import { pathJoin } from "../utils/pathJoin";
 
 function useCustomNavigate() {
   const navigate = useNavigate();
