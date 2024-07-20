@@ -1,5 +1,5 @@
 import QuestionCard from "@components/atoms/QuestionCard";
-import { Button, Paper, Stack, TextField, Toolbar } from "@mui/material";
+import { Button, Grid, Stack, TextField, Toolbar } from "@mui/material";
 import { FormEvent } from "react";
 
 const questions: QuestionCardProps[] = [
@@ -9,6 +9,14 @@ const questions: QuestionCardProps[] = [
     categories: ["personal"],
     answered: 5,
     createdAt: new Date(),
+  },
+  {
+    id: 2,
+    questions: 3,
+    title: "Career Journey",
+    categories: ["personal", "popular"],
+    answered: 5,
+    createdAt: new Date(2024, 6, 20, 12, 38),
   },
   {
     id: 2,
@@ -52,11 +60,7 @@ function InterviewList() {
           </Button>
         </Stack>
       </Stack>
-      <Stack
-        direction='row'
-        justifyContent='space-between'
-        gap={2}
-        sx={{ position: "relative" }}>
+      <Grid container spacing={2}>
         {questions.map((question, i) => (
           <QuestionCard
             key={i + question.title}
@@ -68,7 +72,7 @@ function InterviewList() {
             createdAt={question.createdAt}
           />
         ))}
-      </Stack>
+      </Grid>
       <Toolbar />
     </Stack>
   );
