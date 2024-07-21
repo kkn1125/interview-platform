@@ -1,9 +1,11 @@
 export const Code = {
   SIGNUP: 100,
+  SERVER_ERROR: 10000,
 } as const;
 export type Code = (typeof Code)[keyof typeof Code];
 export const Message = {
-  SIGNUP: 100,
+  SIGNUP: 'success sign up',
+  SERVER_ERROR: 'server error',
 } as const;
 export type Message = (typeof Message)[keyof typeof Message];
 export type ProtocolKeys = keyof typeof Code | keyof typeof Message;

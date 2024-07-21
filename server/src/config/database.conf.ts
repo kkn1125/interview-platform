@@ -10,14 +10,14 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 export const dbOptions = {
-  type: 'mariadb' /* 'mariadb' */,
+  type: 'mysql' /* 'mariadb' */,
   host: DB_HOST,
   port: +(DB_PORT || 3306),
   username: DB_USER,
   password: DB_PASSWORD,
   database: DB_SCHEMA_NAME,
   entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-  synchronize: false,
+  synchronize: true,
   timezone: '+09:00',
   namingStrategy: new SnakeNamingStrategy(),
   migrations: [__dirname + '/../**/migrations/*.ts'],

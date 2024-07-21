@@ -19,11 +19,11 @@ export class InterviewLogger implements LoggerService {
   };
   protected context: string = 'Server';
 
-  log: (message: any, ...optionalParams: [...any]) => void;
-  info: (message: any, ...optionalParams: [...any]) => void;
-  debug: (message: any, ...optionalParams: [...any]) => void;
-  warn: (message: any, ...optionalParams: [...any]) => void;
-  error: (message: any, ...optionalParams: [...any]) => void;
+  log!: (message: any, ...optionalParams: [...any]) => void;
+  info!: (message: any, ...optionalParams: [...any]) => void;
+  debug!: (message: any, ...optionalParams: [...any]) => void;
+  warn!: (message: any, ...optionalParams: [...any]) => void;
+  error!: (message: any, ...optionalParams: [...any]) => void;
 
   protected get timestamp() {
     return format(new Date(), 'HH:mm:ss.SSS');
