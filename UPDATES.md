@@ -9,7 +9,10 @@
     - init
       - 프로젝트 생성
     - feat
-      - user, question 모델 작성
+      - user, bundle, question 엔티티 작성
+      - answer 엔티티 작성
+      - user-profile 엔티티 추가
+      - session 엔티티 추가
       - global interceptor 제작
       - global exception model 작성
       - global response format 작성
@@ -18,6 +21,10 @@
       - 데이터베이스 환경변수 및 공통 변수 작성
       - 데이터베이스 연결 테스트
       - 커스텀 로거 제작 및 global logger 설정
+      - bundle-question, interview-answer 다대다 관계 작성
+      - 각 도메인별 모듈 imports typeorm module table 연결
+    - bugfix
+      - 다대다 관계 버그 수정
 - 2024.07.20
   - client
     - fix

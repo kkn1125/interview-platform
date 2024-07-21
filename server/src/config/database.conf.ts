@@ -24,7 +24,7 @@ export const dbOptions = {
   migrationsRun: true,
   migrationsTableName: 'migrations',
   logging: true,
-  // dropSchema: true,
+  dropSchema: true,
 } as TypeOrmModuleOptions;
 
 export default registerAs('database', (): TypeOrmModuleOptions => dbOptions);

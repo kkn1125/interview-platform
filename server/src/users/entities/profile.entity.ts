@@ -1,20 +1,18 @@
 import { DateColumnEntity } from '@common/date-column.entity';
-import { Bundle } from '@src/bundles/entities/bundle.entity';
-import { User } from '@src/users/entities/user.entity';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { User } from './user.entity';
 
 @Entity()
-export class Question extends BaseEntity implements DateColumnEntity {
+export class Profile extends BaseEntity implements DateColumnEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -22,10 +20,7 @@ export class Question extends BaseEntity implements DateColumnEntity {
   userId!: number | null;
 
   @Column()
-  category!: string;
-
-  @Column()
-  text!: string;
+  image!: string;
 
   @CreateDateColumn()
   createdAt!: Date;
@@ -36,9 +31,6 @@ export class Question extends BaseEntity implements DateColumnEntity {
   @DeleteDateColumn()
   deletedAt!: Date | null;
 
-  @ManyToOne(() => User, (user) => user.questions)
+  @ManyToOne(() => User, (user) => user.profiles)
   user!: User;
-
-  @ManyToMany(() => Bundle, (bundle) => bundle.questions)
-  bundles!: Bundle[];
 }

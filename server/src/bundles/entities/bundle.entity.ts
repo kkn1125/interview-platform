@@ -1,5 +1,5 @@
 import { DateColumnEntity } from '@common/date-column.entity';
-import { Bundle } from '@src/bundles/entities/bundle.entity';
+import { Question } from '@src/questions/entities/question.entity';
 import { User } from '@src/users/entities/user.entity';
 import {
   BaseEntity,
@@ -7,6 +7,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -14,7 +15,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Question extends BaseEntity implements DateColumnEntity {
+export class Bundle extends BaseEntity implements DateColumnEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -22,10 +23,10 @@ export class Question extends BaseEntity implements DateColumnEntity {
   userId!: number | null;
 
   @Column()
-  category!: string;
+  name!: string;
 
-  @Column()
-  text!: string;
+  @Column({ type: 'text', nullable: true })
+  desc!: string | null;
 
   @CreateDateColumn()
   createdAt!: Date;
@@ -36,9 +37,10 @@ export class Question extends BaseEntity implements DateColumnEntity {
   @DeleteDateColumn()
   deletedAt!: Date | null;
 
-  @ManyToOne(() => User, (user) => user.questions)
+  @ManyToOne(() => User, (user) => user.bundles)
   user!: User;
 
-  @ManyToMany(() => Bundle, (bundle) => bundle.questions)
-  bundles!: Bundle[];
+  @ManyToMany(() => Question, (question) => question.bundles)
+  @JoinTable({ name: 'bundle_question' })
+  questions!: Question[];
 }

@@ -1,5 +1,5 @@
 import { DateColumnEntity } from '@common/date-column.entity';
-import { Bundle } from '@src/bundles/entities/bundle.entity';
+import { Interview } from '@src/interview/entities/interview.entity';
 import { User } from '@src/users/entities/user.entity';
 import {
   BaseEntity,
@@ -14,15 +14,12 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Question extends BaseEntity implements DateColumnEntity {
+export class Answer extends BaseEntity implements DateColumnEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
   @Column()
-  userId!: number | null;
-
-  @Column()
-  category!: string;
+  userId!: number;
 
   @Column()
   text!: string;
@@ -36,9 +33,9 @@ export class Question extends BaseEntity implements DateColumnEntity {
   @DeleteDateColumn()
   deletedAt!: Date | null;
 
-  @ManyToOne(() => User, (user) => user.questions)
+  @ManyToOne(() => User, (user) => user.answers)
   user!: User;
 
-  @ManyToMany(() => Bundle, (bundle) => bundle.questions)
-  bundles!: Bundle[];
+  @ManyToMany(() => Interview, (interview) => interview.answers)
+  interviews!: Interview[];
 }
