@@ -1,6 +1,16 @@
 import QuestionCard from "@components/atoms/QuestionCard";
-import { Button, Grid, Stack, TextField, Toolbar } from "@mui/material";
-import { FormEvent } from "react";
+import { sliceGroup } from "@libs/sliceGroup";
+import { sliceGroupAndFill } from "@libs/sliceGroupAndFill";
+import {
+  Box,
+  Button,
+  Stack,
+  TextField,
+  Toolbar,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { FormEvent, useMemo } from "react";
 
 const questions: QuestionCardProps[] = [
   {
@@ -19,7 +29,31 @@ const questions: QuestionCardProps[] = [
     createdAt: new Date(2024, 6, 20, 12, 38),
   },
   {
-    id: 2,
+    id: 3,
+    questions: 3,
+    title: "Career Journey",
+    categories: ["personal", "popular"],
+    answered: 5,
+    createdAt: new Date(2024, 6, 20, 12, 38),
+  },
+  {
+    id: 4,
+    questions: 3,
+    title: "Career Journey",
+    categories: ["personal", "popular"],
+    answered: 5,
+    createdAt: new Date(2024, 6, 20, 12, 38),
+  },
+  {
+    id: 5,
+    questions: 3,
+    title: "Career Journey",
+    categories: ["personal", "popular"],
+    answered: 5,
+    createdAt: new Date(2024, 6, 20, 12, 38),
+  },
+  {
+    id: 6,
     questions: 3,
     title: "Career Journey",
     categories: ["personal", "popular"],
@@ -29,10 +63,25 @@ const questions: QuestionCardProps[] = [
 ];
 
 function InterviewList() {
+  const theme = useTheme();
+  const isXsUp = useMediaQuery(theme.breakpoints.up("xs"));
+  const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
+  const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
+  const isLgUp = useMediaQuery(theme.breakpoints.up("lg"));
+
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     return false;
   }
+
+  const slicedList = useMemo(() => {
+    let amount = 1;
+    if (isLgUp) amount = 5;
+    else if (isMdUp) amount = 4;
+    else if (isSmUp) amount = 3;
+    return sliceGroupAndFill(questions, amount, null);
+  }, [isXsUp, isSmUp, isMdUp, isLgUp]);
+
   return (
     <Stack flex={1}>
       <Stack sx={{ mb: 4 }}>
@@ -60,19 +109,19 @@ function InterviewList() {
           </Button>
         </Stack>
       </Stack>
-      <Grid container spacing={2}>
-        {questions.map((question, i) => (
-          <QuestionCard
-            key={i + question.title}
-            id={question.id}
-            questions={question.questions}
-            title={question.title}
-            categories={question.categories}
-            answered={question.answered}
-            createdAt={question.createdAt}
-          />
+      <Stack gap={3}>
+        {slicedList.map((row, r) => (
+          <Stack direction='row' key={r} gap={3}>
+            {row.map((question, i) =>
+              question ? (
+                <QuestionCard key={i + question.id} question={question} />
+              ) : (
+                <Box key={i} flex={1} maxWidth={250} p={3} />
+              )
+            )}
+          </Stack>
         ))}
-      </Grid>
+      </Stack>
       <Toolbar />
     </Stack>
   );
