@@ -1,16 +1,18 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { BundlesService } from './bundles.service';
 import { CreateBundleDto } from './dto/create-bundle.dto';
 import { UpdateBundleDto } from './dto/update-bundle.dto';
 
+@ApiTags('Interview', 'Question', 'Bundles')
 @Controller('bundles')
 export class BundlesController {
   constructor(private readonly bundlesService: BundlesService) {}

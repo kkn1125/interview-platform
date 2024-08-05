@@ -7,14 +7,16 @@ import {
 import { HttpStatus } from '@nestjs/common';
 
 export class InterviewResponse {
-  status!: HttpStatus;
+  ok!: boolean;
+  #status!: HttpStatus;
   protocol!: Code;
   message!: Message;
   cause?: any;
 
   constructor(status: HttpStatus, protocol: ProtocolKeys, cause?: any) {
-    const { code, message } = responseProtocol(protocol);
-    this.status = status;
+    const { protocol: code, message } = responseProtocol(protocol);
+    this.#status = status;
+    this.ok = this.#status === 200 || this.#status === 201;
     this.protocol = code;
     this.message = message;
 

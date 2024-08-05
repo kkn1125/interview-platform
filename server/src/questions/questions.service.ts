@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
 import { Question } from './entities/question.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { InterviewException } from '@src/response/interview.exception';
 
 @Injectable()
 export class QuestionsService {
@@ -21,12 +22,27 @@ export class QuestionsService {
   }
 
   async create(createQuestionDto: CreateQuestionDto) {
-    await this.questionRepository.manager.transaction(async (manager) => {
-      await this.questionRepository.save(createQuestionDto, {
+    const qr = this.questionRepository.manager.connection.createQueryRunner();
+    await qr.startTransaction();
+
+    console.log(createQuestionDto);
+    let created;
+    try {
+      created = await this.questionRepository.save(createQuestionDto, {
         transaction: true,
+        reload: true,
       });
-    });
-    return {};
+      await qr.commitTransaction();
+    } catch (error) {
+      await qr.rollbackTransaction();
+      throw new InterviewException(
+        'SERVER_ERROR',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    } finally {
+      await qr.release();
+    }
+    return created;
   }
 
   async update(id: number, updateQuestionDto: UpdateQuestionDto) {

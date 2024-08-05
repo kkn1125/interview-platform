@@ -1,4 +1,5 @@
 import { DateColumnEntity } from '@common/date-column.entity';
+import { CategoryType } from '@common/enums/category.enum';
 import { Bundle } from '@src/bundles/entities/bundle.entity';
 import { User } from '@src/users/entities/user.entity';
 import {
@@ -7,11 +8,13 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Category } from './category.entity';
 
 @Entity()
 export class Question extends BaseEntity implements DateColumnEntity {
@@ -21,11 +24,11 @@ export class Question extends BaseEntity implements DateColumnEntity {
   @Column()
   userId!: number | null;
 
-  @Column()
-  category!: string;
+  @Column({ type: 'enum', enum: CategoryType })
+  categoryType!: CategoryType;
 
-  @Column()
-  text!: string;
+  @Column({ type: 'text', nullable: true })
+  contents!: string;
 
   @CreateDateColumn()
   createdAt!: Date;
@@ -37,8 +40,13 @@ export class Question extends BaseEntity implements DateColumnEntity {
   deletedAt!: Date | null;
 
   @ManyToOne(() => User, (user) => user.questions)
+  @JoinColumn()
   user!: User;
 
   @ManyToMany(() => Bundle, (bundle) => bundle.questions)
   bundles!: Bundle[];
+
+  @ManyToOne(() => Category, (category) => category.questions)
+  @JoinColumn({ name: 'category_type', referencedColumnName: 'name' })
+  category!: Category;
 }

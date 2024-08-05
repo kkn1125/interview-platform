@@ -3,12 +3,15 @@ export const Code = {
   SERVER_ERROR: 10000,
 } as const;
 export type Code = (typeof Code)[keyof typeof Code];
+
 export const Message = {
   SIGNUP: 'success sign up',
   SERVER_ERROR: 'server error',
 } as const;
 export type Message = (typeof Message)[keyof typeof Message];
+
 export type ProtocolKeys = keyof typeof Code | keyof typeof Message;
+
 /* Error Protocol */
 export const Protocol = {
   // Code, Message
@@ -29,7 +32,7 @@ export function responseProtocol(
   key: keyof typeof Code | keyof typeof Message,
 ) {
   return {
-    code: Code[key],
+    protocol: Code[key],
     message: Message[key],
   };
 }
