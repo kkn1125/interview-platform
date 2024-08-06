@@ -6,12 +6,15 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { InterviewResponse } from '@src/response/interview-response';
 import { InterviewException } from '@src/response/interview.exception';
+import { createHmacToken } from '@libs/createHmacToken';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    private readonly configService: ConfigService,
   ) {}
 
   findAll() {
@@ -29,10 +32,33 @@ export class UsersService {
   }
 
   async create(createUserDto: CreateUserDto) {
-    await this.userRepository.manager.transaction(async (manager) => {
-      await this.userRepository.save(createUserDto, { transaction: true });
-    });
-    return {};
+    const qr = this.userRepository.manager.connection.createQueryRunner();
+
+    await qr.startTransaction();
+
+    try {
+      const secretKey = this.configService.get('common.secretKey');
+      const passwordToken = createHmacToken(
+        secretKey,
+        createUserDto.email,
+        createUserDto.password,
+      );
+      const newDto = {
+        ...createUserDto,
+        password: passwordToken,
+      };
+      const saved = await this.userRepository.save(newDto, {
+        transaction: true,
+        reload: true,
+      });
+      await qr.commitTransaction();
+      return saved;
+    } catch (error) {
+      await qr.rollbackTransaction();
+      throw error;
+    } finally {
+      await qr.release();
+    }
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

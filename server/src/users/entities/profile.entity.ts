@@ -16,8 +16,8 @@ export class Profile extends BaseEntity implements DateColumnEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
-  userId!: number | null;
+  @Column({ nullable: true })
+  userId!: number;
 
   @Column()
   image!: string;
@@ -28,8 +28,8 @@ export class Profile extends BaseEntity implements DateColumnEntity {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @DeleteDateColumn()
-  deletedAt!: Date | null;
+  @DeleteDateColumn({ nullable: true })
+  deletedAt!: Date;
 
   @ManyToOne(() => User, (user) => user.profiles)
   user!: User;

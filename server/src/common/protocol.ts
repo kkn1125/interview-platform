@@ -1,10 +1,12 @@
 export const Code = {
+  OK: 1,
   SIGNUP: 100,
   SERVER_ERROR: 10000,
 } as const;
 export type Code = (typeof Code)[keyof typeof Code];
 
 export const Message = {
+  OK: undefined,
   SIGNUP: 'success sign up',
   SERVER_ERROR: 'server error',
 } as const;

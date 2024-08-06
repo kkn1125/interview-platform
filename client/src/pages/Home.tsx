@@ -1,8 +1,37 @@
 import ForwardButton from "@components/atoms/ForwardButton";
+import useGuard from "@hooks/useGuard";
 import { Box, Stack, Typography } from "@mui/material";
 import SummaryCard from "../components/atoms/SummaryCard";
+import { useContext, useEffect } from "react";
+import {
+  LoginActionType,
+  LoginContext,
+  LoginDispatchContext,
+} from "@src/providers/LoginProvider";
+import { useMutation } from "@tanstack/react-query";
+import { requestInterview } from "@src/axios/request.interview";
+import { checkLogin } from "@src/apis/auth/check.login";
 
 function Home() {
+  const loginDispatch = useContext(LoginDispatchContext);
+  const loginState = useContext(LoginContext);
+  const mutation = useMutation({
+    mutationKey: ["checkLogin"],
+    mutationFn: handleCheckLogin,
+  });
+
+  function handleCheckLogin() {
+    return checkLogin();
+  }
+
+  useEffect(() => {
+    mutation.mutate();
+  }, []);
+
+  const { createGuard } = useGuard();
+
+  const loginGuard = createGuard("loginGuard", () => !loginState);
+
   return (
     <Stack flex={1}>
       <Box component='main' textAlign='center' p={4}>
@@ -20,7 +49,10 @@ function Home() {
           나의 지금은 누군가에게 과거가 되고, 과거의 질문이 모여 현재의 나와
           소통하고 기록합니다. 자신만의 완성된 인터뷰를 자기소개에 활용해보세요.
         </Typography>
-        <ForwardButton sx={{ mt: 4 }} to='/interview/choise'>
+        <ForwardButton
+          sx={{ mt: 4 }}
+          to='/interview/choise'
+          guard={() => loginGuard()}>
           인터뷰 시작하기
         </ForwardButton>
       </Box>

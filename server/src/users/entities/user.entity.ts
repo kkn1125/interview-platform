@@ -1,6 +1,5 @@
 import { DateColumnEntity } from '@common/date-column.entity';
 import { Answer } from '@src/answer/entities/answer.entity';
-import { Session } from '@src/auth/entities/session.entity';
 import { Bundle } from '@src/bundles/entities/bundle.entity';
 import { Interview } from '@src/interview/entities/interview.entity';
 import { Question } from '@src/questions/entities/question.entity';
@@ -21,13 +20,13 @@ export class User extends BaseEntity implements DateColumnEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column({ type: 'varchar', length: 20 })
   nickname!: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 150 })
   password!: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 50 })
   email!: string;
 
   @CreateDateColumn()
@@ -36,14 +35,11 @@ export class User extends BaseEntity implements DateColumnEntity {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @DeleteDateColumn()
-  deletedAt!: Date | null;
+  @DeleteDateColumn({ nullable: true })
+  deletedAt!: Date;
 
   @OneToMany(() => Profile, (profile) => profile.user)
   profiles!: Profile[];
-
-  @OneToMany(() => Session, (session) => session.user)
-  sessions!: Session[];
 
   @OneToMany(() => Question, (question) => question.user)
   questions!: Question[];

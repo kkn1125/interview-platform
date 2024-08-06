@@ -21,8 +21,8 @@ export class Question extends BaseEntity implements DateColumnEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
-  userId!: number | null;
+  @Column({ nullable: true })
+  userId!: number;
 
   @Column({ type: 'enum', enum: CategoryType })
   categoryType!: CategoryType;
@@ -36,8 +36,8 @@ export class Question extends BaseEntity implements DateColumnEntity {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @DeleteDateColumn()
-  deletedAt!: Date | null;
+  @DeleteDateColumn({ nullable: true })
+  deletedAt!: Date;
 
   @ManyToOne(() => User, (user) => user.questions)
   @JoinColumn()

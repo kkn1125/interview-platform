@@ -1,5 +1,6 @@
 create schema interview;
 
+
 use interview;
 
 drop schema interview;

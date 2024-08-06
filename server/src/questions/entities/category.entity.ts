@@ -27,8 +27,8 @@ export class Category extends BaseEntity implements DateColumnEntity {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @DeleteDateColumn()
-  deletedAt!: Date | null;
+  @DeleteDateColumn({ nullable: true })
+  deletedAt!: Date;
 
   @OneToMany(() => Question, (question) => question.category)
   questions!: Question[];

@@ -41,6 +41,7 @@ async function bootstrap() {
       'http://localhost:8000',
       'http://localhost:8080',
     ],
+    credentials: true,
   });
 
   await app.listen(commonConf.port);

@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "cd server && npm run start:dev",
+    "dev": "npx --yes concurrently --kill-others-on-fail \"npm run dev:client\" \"npm run dev:server\""
+  },
   "devDependencies": {},
   "dependencies": {}
 }

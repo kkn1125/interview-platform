@@ -1,15 +1,28 @@
 import useCustomNavigate from "@hooks/useCustomNavigate";
 import { Button, ButtonOwnProps } from "@mui/material";
 
+type GuardType = { guard?: () => boolean };
 type ToType = { to?: string };
 type ForwardButtonProps = {} & ButtonOwnProps;
 
-function ForwardButton({ to, sx, ...props }: ToType & ForwardButtonProps) {
+function ForwardButton({
+  guard,
+  to,
+  sx,
+  ...props
+}: GuardType & ToType & ForwardButtonProps) {
   const { forward } = useCustomNavigate();
 
   function handleForward() {
-    if (to) {
-      forward(to);
+    if (!guard || guard()) {
+      if (to) {
+        forward(to);
+      }
+      return;
+    }
+
+    if (!guard()) {
+      alert("금지");
     }
   }
 

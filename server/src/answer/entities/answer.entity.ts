@@ -30,8 +30,8 @@ export class Answer extends BaseEntity implements DateColumnEntity {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @DeleteDateColumn()
-  deletedAt!: Date | null;
+  @DeleteDateColumn({ nullable: true })
+  deletedAt!: Date;
 
   @ManyToOne(() => User, (user) => user.answers)
   user!: User;
