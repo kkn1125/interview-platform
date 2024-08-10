@@ -1,16 +1,14 @@
 import ForwardButton from "@components/atoms/ForwardButton";
 import useGuard from "@hooks/useGuard";
 import { Box, Stack, Typography } from "@mui/material";
-import SummaryCard from "../components/atoms/SummaryCard";
-import { useContext, useEffect } from "react";
+import { checkLogin } from "@src/apis/auth/check.login";
 import {
-  LoginActionType,
   LoginContext,
   LoginDispatchContext,
 } from "@src/providers/LoginProvider";
 import { useMutation } from "@tanstack/react-query";
-import { requestInterview } from "@src/axios/request.interview";
-import { checkLogin } from "@src/apis/auth/check.login";
+import { useContext, useEffect } from "react";
+import SummaryCard from "../components/atoms/SummaryCard";
 
 function Home() {
   const loginDispatch = useContext(LoginDispatchContext);

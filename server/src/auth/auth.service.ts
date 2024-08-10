@@ -2,10 +2,9 @@ import { createHmacToken } from '@libs/createHmacToken';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import { InterviewResponse } from '@src/response/interview-response';
 import { InterviewException } from '@src/response/interview.exception';
+import { InterviewResponse } from '@src/response/interview.response';
 import { User } from '@src/users/entities/user.entity';
-import * as crypto from 'crypto';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -24,7 +23,7 @@ export class AuthService {
     });
     if (!user) throw new InterviewException('SERVER_ERROR', HttpStatus.OK);
 
-    return new InterviewResponse(HttpStatus.OK, 'OK');
+    return new InterviewResponse('SUCCESS', HttpStatus.OK);
   }
 
   checkLogin(token?: string) {}

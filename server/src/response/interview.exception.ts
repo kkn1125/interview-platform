@@ -1,20 +1,28 @@
 import { HttpException, HttpExceptionOptions } from '@nestjs/common';
-import { Protocol } from '@src/common/protocol';
+import { Protocol } from '@src/protocol/protocol';
 
 export class InterviewException<
   T extends keyof Protocol,
 > extends HttpException {
   constructor(
-    response: string | Record<string, any>,
+    response: T,
     status: number,
+    details?: keyof (typeof Protocol)['Details'][T],
     options?: HttpExceptionOptions,
   );
   constructor(response: T, status: number, options?: HttpExceptionOptions);
   constructor(
-    response: (string | Record<string, any>) & T,
+    response: T,
     status: number,
+    detailsOrOptions?:
+      | keyof (typeof Protocol)['Details'][T]
+      | HttpExceptionOptions,
     options?: HttpExceptionOptions,
   ) {
-    super(response, status, options);
+    let responseText: T | string = response;
+    if (typeof detailsOrOptions === 'string') {
+      responseText = response + '|' + detailsOrOptions;
+    }
+    super(responseText, status, options);
   }
 }

@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
-import { InterviewResponse } from '@src/response/interview-response';
+import { InterviewResponse } from '@src/response/interview.response';
 import { InterviewException } from '@src/response/interview.exception';
 import { createHmacToken } from '@libs/createHmacToken';
 import { ConfigService } from '@nestjs/config';
@@ -17,18 +17,21 @@ export class UsersService {
     private readonly configService: ConfigService,
   ) {}
 
-  findAll() {
-    return this.userRepository.find();
+  async findAll() {
+    const list = await this.userRepository.find();
+    return new InterviewResponse('SUCCESS', HttpStatus.OK, { data: list });
   }
 
   async findOne(id: number) {
     const found = await this.userRepository.findOne({ where: { id } });
     if (!found) {
       throw new InterviewException(
-        'SERVER_ERROR',
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        'USER_ERROR',
+        HttpStatus.NOT_FOUND,
+        'NOT_FOUND_ERROR',
       );
     }
+    return new InterviewResponse('SUCCESS', HttpStatus.OK, { data: found });
   }
 
   async create(createUserDto: CreateUserDto) {
@@ -52,7 +55,7 @@ export class UsersService {
         reload: true,
       });
       await qr.commitTransaction();
-      return saved;
+      return new InterviewResponse('SUCCESS', HttpStatus.OK, { data: saved });
     } catch (error) {
       await qr.rollbackTransaction();
       throw error;
@@ -61,8 +64,9 @@ export class UsersService {
     }
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const updated = await this.userRepository.update({ id }, updateUserDto);
+    return new InterviewResponse('SUCCESS', HttpStatus.OK, { data: updated });
   }
 
   remove(id: number) {
